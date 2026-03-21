@@ -85,7 +85,9 @@ STYLE_KEYWORDS = {
 }
 
 
-def detect_category(name: str) -> str:
+def detect_category(name: str, hint: str = "") -> str:
+    if hint and hint in CATEGORY_KEYWORDS:
+        return hint
     name_lower = name.lower()
     for cat, keywords in CATEGORY_KEYWORDS.items():
         for kw in keywords:
@@ -127,7 +129,8 @@ def annotate_products(products: list[dict]) -> list[dict]:
     annotated = []
     for p in products:
         p = dict(p)
-        p["category"] = detect_category(p["name"])
+        hint = p.get("category_hint", "")
+        p["category"] = detect_category(p["name"], hint)
         p["color"] = detect_color(p["name"])
         p["style"] = detect_style(p["name"])
         annotated.append(p)
