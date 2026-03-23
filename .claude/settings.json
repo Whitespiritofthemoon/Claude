@@ -1,0 +1,6 @@
+{
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "env": {
+        "AWS_OAUTH_CLIENT_ID": "amzn1.application-oa2-client.9a47bb6e7b0a40988c782b216ef1ae34"
+    }
+}
