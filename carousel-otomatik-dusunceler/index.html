@@ -3,366 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Otomatik Düşünceler — Carousel</title>
+<title>Otomatik Düşünceler — @psikologclaudiakonar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  :root {
+    --cream: #FAF6EF;
+    --warm-white: #FDF9F4;
+    --charcoal: #1C1917;
+    --mid: #6B5E52;
+    --accent: #B8845A;
+    --accent-light: #D4A882;
+    --gold: #C9A96E;
+    --gold-light: rgba(201,169,110,0.15);
+    --rose: #C4907A;
+  }
+
   body {
-    background: #1a1a1a;
+    background: #E8E0D5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
-    padding: 40px 20px;
-    gap: 40px;
+    padding: 48px 20px;
+    gap: 48px;
+    font-family: 'DM Sans', sans-serif;
   }
 
-  .label {
-    color: #666;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
+  .slide-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .slide-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: -30px;
-    align-self: flex-start;
-    margin-left: calc(50% - 540px / 2);
+    color: #8a7a6e;
   }
 
+  /* =====================
+     BASE SLIDE
+  ===================== */
   .slide {
     width: 540px;
     height: 540px;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 55px;
     overflow: hidden;
     flex-shrink: 0;
   }
 
-  /* === KAPAK === */
-  .slide-cover {
-    background: #1c2b22;
+  /* =====================
+     KAPAK
+  ===================== */
+  .s1 {
+    background: var(--charcoal);
   }
-  .slide-cover::before {
-    content: '';
+  .s1 .bg-circle {
     position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 40%, rgba(180,210,160,0.07) 0%, transparent 70%),
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-  .slide-cover .tag {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 9.5px;
-    font-weight: 400;
+  .s1 .top-line {
+    position: absolute;
+    top: 42px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .s1 .top-line .brand {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: #8aac7a;
-    margin-bottom: 28px;
-    opacity: 0.85;
+    color: var(--gold);
+    opacity: 0.8;
   }
-  .slide-cover .title {
-    font-size: 13px;
-    font-weight: 300;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: #c8d8be;
-    margin-bottom: 36px;
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.7;
-  }
-  .slide-cover .main {
-    font-size: 38px;
-    font-weight: 300;
-    line-height: 1.5;
-    color: #f0ede6;
-    text-align: center;
-    font-style: italic;
-  }
-  .slide-cover .main em {
-    font-style: normal;
-    color: #8aac7a;
-  }
-  .slide-cover .sub {
-    font-size: 15px;
-    font-weight: 300;
-    color: #8a9882;
-    margin-top: 28px;
-    letter-spacing: 1px;
-    text-align: center;
-    line-height: 1.8;
-  }
-  .slide-cover .line {
-    width: 40px;
-    height: 1px;
-    background: rgba(138,172,122,0.4);
-    margin: 24px auto 0;
-  }
-
-  /* === SLIDES 2-7 === */
-  .slide-content {
-    background: #f5f0e8;
-  }
-  .slide-content::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  }
-  .slide-content .slide-number {
-    position: absolute;
-    top: 28px;
-    right: 32px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
+  .s1 .top-line .series {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
     font-weight: 300;
     letter-spacing: 3px;
-    color: #b8a898;
-  }
-  .slide-content .accent-line {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, transparent, #8aac7a 30%, #8aac7a 70%, transparent);
-    opacity: 0.6;
-  }
-  .slide-content .body-text {
-    font-size: 17.5px;
-    font-weight: 300;
-    line-height: 1.95;
-    color: #2c2c2c;
-    text-align: left;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-  .slide-content .body-text strong {
-    font-weight: 400;
-    color: #1a1a1a;
-    font-style: italic;
-  }
-  .slide-content .body-text .highlight {
-    color: #4a6b3a;
-    font-style: italic;
-  }
-  .slide-content .heading {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 400;
-    letter-spacing: 4px;
     text-transform: uppercase;
-    color: #8aac7a;
-    margin-bottom: 22px;
-    position: relative;
-    z-index: 1;
+    color: rgba(255,255,255,0.3);
   }
-
-  /* === SON SLAYT === */
-  .slide-cta {
-    background: #1c2b22;
+  .s1 .gold-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 10%, var(--gold) 40%, var(--gold) 60%, transparent 90%);
+    opacity: 0.5;
   }
-  .slide-cta::before {
-    content: '';
+  .s1 .content {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 70% at 50% 50%, rgba(138,172,122,0.08) 0%, transparent 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 52px 70px;
+    text-align: center;
   }
-  .slide-cta .cta-number {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 80px;
+  .s1 .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    opacity: 0.9;
+  }
+  .s1 .main-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #F5EFE6;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .s1 .main-text .highlight {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .s1 .ornament {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 24px auto;
+    opacity: 0.5;
+  }
+  .s1 .sub-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
     font-weight: 300;
-    color: rgba(138,172,122,0.12);
+    line-height: 2;
+    color: rgba(245,239,230,0.5);
+    letter-spacing: 0.5px;
+  }
+  .s1 .bottom-handle {
     position: absolute;
-    top: 20px;
-    left: 48px;
+    bottom: 36px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.4);
+  }
+
+  /* =====================
+     İÇERİK SLAYTLARı (2-6)
+  ===================== */
+  .s-content {
+    background: var(--warm-white);
+  }
+  .s-content .top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--gold), var(--accent-light), transparent);
+    opacity: 0.6;
+  }
+  .s-content .slide-num {
+    position: absolute;
+    top: 30px;
+    right: 36px;
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    color: rgba(201,169,110,0.1);
     line-height: 1;
     font-style: italic;
   }
-  .slide-cta .cta-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 9.5px;
+  .s-content .inner {
+    position: absolute;
+    inset: 0;
+    padding: 52px 52px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .s-content .tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: #8aac7a;
-    margin-bottom: 30px;
-    opacity: 0.85;
-    position: relative;
-    z-index: 1;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .slide-cta .cta-main {
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1.55;
-    color: #f0ede6;
-    text-align: center;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
-  }
-  .slide-cta .cta-main em {
-    font-style: normal;
-    color: #8aac7a;
-  }
-  .slide-cta .cta-sub {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    color: #6a8a5a;
-    margin-top: 32px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .slide-cta .divider {
-    width: 30px;
+  .s-content .tag::after {
+    content: '';
+    flex: 1;
     height: 1px;
-    background: rgba(138,172,122,0.35);
-    margin: 20px auto;
-    position: relative;
-    z-index: 1;
+    background: linear-gradient(to right, var(--accent-light), transparent);
+    opacity: 0.4;
+    max-width: 60px;
+  }
+  .s-content .body {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 2;
+    color: var(--charcoal);
+  }
+  .s-content .body em {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .s-content .body strong {
+    font-weight: 500;
+    color: var(--charcoal);
+  }
+  .s-content .body .muted {
+    color: var(--mid);
+    font-style: italic;
+  }
+  .s-content .body .pop {
+    color: var(--accent);
+    font-weight: 500;
+    font-style: italic;
+  }
+  .s-content .dot-brand {
+    position: absolute;
+    bottom: 28px;
+    left: 52px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(184,132,90,0.35);
+  }
+
+  /* =====================
+     SON SLAYT (CTA)
+  ===================== */
+  .s7 {
+    background: var(--charcoal);
+  }
+  .s7 .arc {
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .s7 .arc2 {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,169,110,0.07);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .s7 .gold-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 10%, var(--gold) 40%, var(--gold) 60%, transparent 90%);
+    opacity: 0.4;
+  }
+  .s7 .inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 56px;
+  }
+  .s7 .tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+  .s7 .main {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.65;
+    color: #F5EFE6;
+    margin-bottom: 10px;
+  }
+  .s7 .main .gold-word {
+    color: var(--gold);
+  }
+  .s7 .ornament {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 26px auto;
+    opacity: 0.5;
+  }
+  .s7 .action {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.5);
+    line-height: 2.2;
+  }
+  .s7 .handle {
+    position: absolute;
+    bottom: 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.6;
   }
 </style>
 </head>
 <body>
 
 <!-- KAPAK -->
-<div class="label">Slayt 1 / 7 — Kapak</div>
-<div class="slide slide-cover">
-  <div class="tag">Bilişsel Terapi Serisi</div>
-  <div class="title">Otomatik Düşünceler</div>
-  <div class="main">Bugün aklından kaç kez<br><em>"yeterli değilim"</em><br>geçti?</div>
-  <div class="sub">Saymadın bile.<br>Çünkü o kadar hızlıydı.</div>
-  <div class="line"></div>
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 1 — Kapak</div>
+  <div class="slide s1">
+    <div class="bg-circle"></div>
+    <div class="gold-bar"></div>
+    <div class="top-line">
+      <span class="brand">@psikologclaudiakonar</span>
+      <span class="series">Bilişsel Terapi</span>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Otomatik Düşünceler</div>
+      <div class="main-text">
+        Bugün aklından<br>kaç kez<br>
+        <span class="highlight">"yeterli değilim"</span><br>geçti?
+      </div>
+      <div class="ornament"></div>
+      <div class="sub-text">Saymadın bile.<br>Çünkü o kadar hızlıydı.</div>
+    </div>
+    <div class="bottom-handle">Zihninin arka planında dönen program</div>
+  </div>
 </div>
 
 <!-- SLAYT 2 -->
-<div class="label">Slayt 2 / 7</div>
-<div class="slide slide-content">
-  <div class="accent-line"></div>
-  <div class="slide-number">02 / 07</div>
-  <div class="heading">Zihnin Hızı</div>
-  <div class="body-text">
-    Beyin saniyede binlerce bilgiyi işler.<br>
-    Ama hepsini bilince taşımaz.<br><br>
-    Bazı düşünceler o kadar hızlı gelip geçer ki
-    onları düşündüğünü bile <strong>fark etmezsin.</strong><br><br>
-    Sadece sonucunu hissedersin:<br>
-    <span class="highlight">Aniden üzgün olmak.<br>
-    Sebepsiz sinirlenmiş olmak.<br>
-    Hiçbir şey yapmak istememek.</span><br><br>
-    İşte o "sebepsiz" his —<br>
-    genellikle çok hızlı geçen<br>
-    bir düşüncenin <strong>izidir.</strong>
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 2</div>
+  <div class="slide s-content">
+    <div class="top-bar"></div>
+    <div class="slide-num">02</div>
+    <div class="inner">
+      <div class="tag">Zihnin Hızı</div>
+      <div class="body">
+        Beyin saniyede binlerce bilgiyi işler.<br>
+        Ama hepsini bilince taşımaz.<br><br>
+        Bazı düşünceler o kadar hızlı gelip geçer ki<br>
+        <em>fark etmezsin bile.</em><br><br>
+        Sadece sonucunu hissedersin:<br>
+        <span class="pop">Aniden üzgün olmak.<br>
+        Sebepsiz sinirlenmiş olmak.<br>
+        Hiçbir şey yapmak istememek.</span><br><br>
+        O "sebepsiz" his —<br>
+        <strong>çok hızlı geçen bir düşüncenin izidir.</strong>
+      </div>
+    </div>
+    <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
 </div>
 
 <!-- SLAYT 3 -->
-<div class="label">Slayt 3 / 7</div>
-<div class="slide slide-content">
-  <div class="accent-line"></div>
-  <div class="slide-number">03 / 07</div>
-  <div class="heading">Otomatik Düşünce Nedir?</div>
-  <div class="body-text">
-    Buna bilişsel terapi <strong>"otomatik düşünce"</strong> diyor.<br><br>
-    Otomatik —<br>
-    çünkü irade dışı geliyor.<br>
-    Çünkü öğrenilmiş.<br>
-    Çünkü defalarca tekrarlanmış.<br><br>
-    Ve her tekrarda biraz daha<br>
-    <span class="highlight">gerçek hissettiriyor.</span><br><br>
-    <em>"Ben başarısızım."<br>
-    "Kimse beni anlamıyor."<br>
-    "Hep ben mahvediyorum."</em><br><br>
-    Bu düşünceler <strong>gerçek değil.</strong><br>
-    Ama çok eski.
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 3</div>
+  <div class="slide s-content">
+    <div class="top-bar"></div>
+    <div class="slide-num">03</div>
+    <div class="inner">
+      <div class="tag">Otomatik Düşünce</div>
+      <div class="body">
+        Buna bilişsel terapi<br>
+        <em>"otomatik düşünce"</em> diyor.<br><br>
+        Otomatik — çünkü irade dışı.<br>
+        Çünkü öğrenilmiş. Çünkü<br>
+        defalarca tekrarlanmış.<br><br>
+        <span class="muted">"Ben başarısızım."<br>
+        "Kimse beni anlamıyor."<br>
+        "Hep ben mahvediyorum."</span><br><br>
+        Bu düşünceler <strong>gerçek değil.</strong><br>
+        Ama çok <em>eski.</em>
+      </div>
+    </div>
+    <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
 </div>
 
 <!-- SLAYT 4 -->
-<div class="label">Slayt 4 / 7</div>
-<div class="slide slide-content">
-  <div class="accent-line"></div>
-  <div class="slide-number">04 / 07</div>
-  <div class="heading">Nereden Geliyor?</div>
-  <div class="body-text">
-    Bu düşünceler çok daha derinden —<br>
-    <strong>çekirdek inançlardan</strong> geliyor.<br><br>
-    Çocukken bir ses duyuldu:<br>
-    <span class="highlight">"Sen beceremezsin."<br>
-    "Daha iyi yapabilirdin."<br>
-    "Yetmez bu."</span><br><br>
-    Belki söylendi.<br>
-    Belki hiç söylenmedi —<br>
-    ama <strong>hissedildi.</strong><br><br>
-    Ve beyin o sesi kaydetti.<br>
-    Yıllar sonra —<br>
-    <em>sen söylemeye devam ediyorsun.<br>
-    Kendine.</em>
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 4</div>
+  <div class="slide s-content">
+    <div class="top-bar"></div>
+    <div class="slide-num">04</div>
+    <div class="inner">
+      <div class="tag">Nereden Geliyor?</div>
+      <div class="body">
+        Çok daha derinden —<br>
+        <strong>çekirdek inançlardan.</strong><br><br>
+        Çocukken bir ses duyuldu:<br>
+        <span class="pop">"Sen beceremezsin."<br>
+        "Daha iyi yapabilirdin."<br>
+        "Yetmez bu."</span><br><br>
+        Belki söylendi. Belki söylenmedi —<br>
+        ama <em>hissedildi.</em><br><br>
+        Beyin o sesi kaydetti.<br>
+        Yıllar sonra —<br>
+        <strong>sen söylemeye devam ediyorsun.<br>
+        Kendine.</strong>
+      </div>
+    </div>
+    <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
 </div>
 
 <!-- SLAYT 5 -->
-<div class="label">Slayt 5 / 7</div>
-<div class="slide slide-content">
-  <div class="accent-line"></div>
-  <div class="slide-number">05 / 07</div>
-  <div class="heading">İlk Adım</div>
-  <div class="body-text">
-    Peki ne yapılır?<br><br>
-    İlk adım savaşmak değil.<br>
-    <strong>İlk adım fark etmek.</strong><br><br>
-    <span class="highlight">"Dur. Az önce ne düşündüm?"</span><br><br>
-    Bu soru —<br>
-    o düşünce ile senin arandaki<br>
-    birkaç saniyelik <strong>boşluğu açıyor.</strong><br><br>
-    Ve o boşlukta<br>
-    <em>seçim başlıyor.</em><br><br>
-    Düşünceye inanmak zorunda değilsin.<br>
-    Ama önce onu <strong>görmek</strong> gerekiyor.
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 5</div>
+  <div class="slide s-content">
+    <div class="top-bar"></div>
+    <div class="slide-num">05</div>
+    <div class="inner">
+      <div class="tag">İlk Adım</div>
+      <div class="body">
+        Peki ne yapılır?<br><br>
+        İlk adım savaşmak değil.<br>
+        <strong>İlk adım fark etmek.</strong><br><br>
+        <span class="pop">"Dur. Az önce ne düşündüm?"</span><br><br>
+        Bu soru —<br>
+        o düşünce ile senin arandaki<br>
+        <em>birkaç saniyelik boşluğu açıyor.</em><br><br>
+        Ve o boşlukta<br>
+        <strong>seçim başlıyor.</strong>
+      </div>
+    </div>
+    <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
 </div>
 
 <!-- SLAYT 6 -->
-<div class="label">Slayt 6 / 7</div>
-<div class="slide slide-content">
-  <div class="accent-line"></div>
-  <div class="slide-number">06 / 07</div>
-  <div class="heading">Bu Hafta Bir Deney</div>
-  <div class="body-text">
-    Kendini kötü hissettiğin bir an —<br>
-    <strong>dur.</strong><br><br>
-    Ve sor:<br>
-    <span class="highlight">"Az önce zihnimden ne geçti?"</span><br><br>
-    Cevabı not et.<br>
-    <em>Yargılama.</em><br>
-    Sadece bak.<br><br>
-    Fark etmek,<br>
-    değişmenin <strong>ilk ve</strong><br>
-    <strong>en güçlü adımı.</strong>
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 6</div>
+  <div class="slide s-content">
+    <div class="top-bar"></div>
+    <div class="slide-num">06</div>
+    <div class="inner">
+      <div class="tag">Bu Hafta Bir Deney</div>
+      <div class="body">
+        Kendini kötü hissettiğin bir an —<br>
+        <strong>dur.</strong><br><br>
+        Ve sor:<br>
+        <span class="pop">"Az önce zihnimden ne geçti?"</span><br><br>
+        Cevabı not et.<br>
+        <em>Yargılama. Sadece bak.</em><br><br>
+        Fark etmek —<br>
+        değişmenin <strong>ilk ve<br>
+        en güçlü adımı.</strong>
+      </div>
+    </div>
+    <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
 </div>
 
-<!-- SLAYT 7 — CTA -->
-<div class="label">Slayt 7 / 7 — Son</div>
-<div class="slide slide-cta">
-  <div class="cta-number">7</div>
-  <div class="cta-label">Zihnini Tanı</div>
-  <div class="cta-main">
-    Otomatik düşüncelerini<br>
-    fark etmeye başlamak için<br>
-    <em>bugün bir adım at.</em>
+<!-- SON SLAYT -->
+<div class="slide-wrapper">
+  <div class="slide-label">Slayt 7 — Son</div>
+  <div class="slide s7">
+    <div class="arc"></div>
+    <div class="arc2"></div>
+    <div class="gold-bar"></div>
+    <div class="inner">
+      <div class="tag">Bugün Bir Adım At</div>
+      <div class="main">
+        Otomatik düşüncelerini<br>
+        fark etmeye başlamak için<br>
+        <span class="gold-word">bu an yeterli.</span>
+      </div>
+      <div class="ornament"></div>
+      <div class="action">
+        Kaydet &nbsp;·&nbsp; Paylaş &nbsp;·&nbsp; Uygula
+      </div>
+    </div>
+    <div class="handle">@psikologclaudiakonar</div>
   </div>
-  <div class="divider"></div>
-  <div class="cta-sub">Kaydet · Paylaş · Uygula</div>
 </div>
 
 </body>
