@@ -6,6 +6,7 @@
 <title>Otomatik Düşünceler — @psikologclaudiakonar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -45,6 +46,34 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #8a7a6e;
+  }
+
+  .download-btn {
+    margin-top: 4px;
+    padding: 10px 28px;
+    background: #1C1917;
+    color: #C9A96E;
+    border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .download-btn:hover {
+    background: #C9A96E;
+    color: #1C1917;
+    border-color: #C9A96E;
+  }
+  .download-btn:active {
+    opacity: 0.7;
+  }
+  .download-btn.loading {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   /* =====================
@@ -361,6 +390,7 @@
 <!-- KAPAK -->
 <div class="slide-wrapper">
   <div class="slide-label">Slayt 1 — Kapak</div>
+
   <div class="slide s1">
     <div class="bg-circle"></div>
     <div class="gold-bar"></div>
@@ -379,6 +409,7 @@
     </div>
     <div class="bottom-handle">Zihninin arka planında dönen program</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-01-kapak.png')">↓ İndir</button>
 </div>
 
 <!-- SLAYT 2 -->
@@ -404,6 +435,7 @@
     </div>
     <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-02-zihnin-hizi.png')">↓ İndir</button>
 </div>
 
 <!-- SLAYT 3 -->
@@ -429,6 +461,7 @@
     </div>
     <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-03-otomatik-dusunce.png')">↓ İndir</button>
 </div>
 
 <!-- SLAYT 4 -->
@@ -456,6 +489,7 @@
     </div>
     <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-04-nereden-geliyor.png')">↓ İndir</button>
 </div>
 
 <!-- SLAYT 5 -->
@@ -480,6 +514,7 @@
     </div>
     <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-05-ilk-adim.png')">↓ İndir</button>
 </div>
 
 <!-- SLAYT 6 -->
@@ -504,6 +539,7 @@
     </div>
     <div class="dot-brand">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-06-deney.png')">↓ İndir</button>
 </div>
 
 <!-- SON SLAYT -->
@@ -527,7 +563,33 @@
     </div>
     <div class="handle">@psikologclaudiakonar</div>
   </div>
+  <button class="download-btn" onclick="downloadSlide(this.previousElementSibling, 'slayt-07-son.png')">↓ İndir</button>
 </div>
 
+<script>
+function downloadSlide(slideEl, filename) {
+  const btn = slideEl.parentElement.querySelector('.download-btn');
+  btn.classList.add('loading');
+  btn.textContent = 'Hazırlanıyor...';
+  html2canvas(slideEl, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: null,
+    width: 540,
+    height: 540,
+    logging: false
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.classList.remove('loading');
+    btn.textContent = '↓ İndir';
+  }).catch(() => {
+    btn.classList.remove('loading');
+    btn.textContent = '↓ İndir';
+  });
+}
+</script>
 </body>
 </html>
