@@ -36,7 +36,7 @@ from tqdm import tqdm
 ICLOUD_EMAIL = os.environ.get("ICLOUD_EMAIL", "")          # iCloud Apple ID
 ICLOUD_PASSWORD = os.environ.get("ICLOUD_PASSWORD", "")    # iCloud şifresi
 
-DRIVE_ROOT_FOLDER = "iCloud Yedek"   # Drive'da oluşturulacak ana klasör adı
+DRIVE_TARGET_FOLDER_ID = "1_2SHi2LPmRK6TZzpqKF09OlLTP067JRx"  # Hedef Drive klasörü
 CREDENTIALS_FILE = "credentials.json"  # Google API credentials dosyası
 TOKEN_FILE = "token.json"              # Kayıtlı oturum token'ı
 
@@ -202,9 +202,14 @@ def main():
     drive = authenticate_google_drive()
     log.info("Google Drive bağlantısı başarılı.")
 
-    # Drive'da ana klasörü oluştur
-    root_folder_id = get_or_create_folder(drive, DRIVE_ROOT_FOLDER)
-    log.info(f"Drive ana klasör ID: {root_folder_id}")
+    # Hedef Drive klasörünü doğrula
+    root_folder_id = DRIVE_TARGET_FOLDER_ID
+    try:
+        meta = drive.files().get(fileId=root_folder_id, fields="id,name").execute()
+        log.info(f"Hedef klasör: '{meta['name']}' (ID: {root_folder_id})")
+    except HttpError as e:
+        log.error(f"Hedef Drive klasörüne erişilemiyor: {e}\nKlasör ID'sini ve izinleri kontrol et.")
+        sys.exit(1)
 
     # iCloud Drive dosyalarını tara
     log.info("iCloud Drive taranıyor...")
