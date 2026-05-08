@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  points        Int       @default(0)
+  level         Int       @default(1)
+  streak        Int       @default(0)
+  lastLoginDate String?
+
+  contents      Content[]
+  quizAttempts  QuizAttempt[]
+  userBadges    UserBadge[]
+  dailyLogs     DailyLog[]
+  studyPlan     StudyPlan?
+}
+
+model Content {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String?
+  fileUrl     String?
+  fileType    String?
+  coverImage  String?
+  tags        String?
+  viewCount   Int      @default(0)
+  isFavorite  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  summary    String?
+  keyPoints  String?
+  flashcards String?
+
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questions    QuizQuestion[]
+  quizAttempts QuizAttempt[]
+}
+
+model QuizQuestion {
+  id           String  @id @default(cuid())
+  contentId    String
+  question     String
+  options      String
+  correctIndex Int
+  explanation  String?
+
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id             String   @id @default(cuid())
+  userId         String
+  contentId      String
+  score          Int
+  totalQuestions Int
+  answers        String
+  pointsEarned   Int      @default(0)
+  completedAt    DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+}
+
+model Badge {
+  id             String @id @default(cuid())
+  name           String @unique
+  description    String
+  icon           String
+  pointsRequired Int    @default(0)
+
+  userBadges UserBadge[]
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  badgeId  String
+  earnedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+}
+
+model DailyLog {
+  id           String  @id @default(cuid())
+  userId       String
+  date         String
+  studyMinutes Int     @default(0)
+  quizzesDone  Int     @default(0)
+  pointsEarned Int     @default(0)
+  loginBonus   Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+}
+
+model StudyPlan {
+  id                String  @id @default(cuid())
+  userId            String  @unique
+  weeklyGoalMinutes Int     @default(140)
+  weeklyGoalQuizzes Int     @default(3)
+  notifyEnabled     Boolean @default(true)
+  notifyTime        String  @default("09:00")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
